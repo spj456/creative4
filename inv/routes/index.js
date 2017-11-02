@@ -7,16 +7,12 @@ router.get('/', function (req, res) {
     res.sendFile('index.html', { root: 'public' });
 })
 
-router.get('/addItem', function (req, res) {
+router.post('/addItem', function (req, res) {
     console.log("adds item");
     fs.appendFile('items.dat.txt', req.query.item, function (err) {
         if (err) throw err;
         console.log('Saved!');
     });
-})
-
-router.get('/addItemQuantity', function (req, res) {
-    console.log("adds item");
     fs.appendFile('quantity.dat.txt', req.query.quantity, function (err) {
         if (err) throw err;
         console.log('Saved!');
