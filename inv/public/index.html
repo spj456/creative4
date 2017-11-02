@@ -9,15 +9,24 @@
     </script>
     <script>
         $(document).ready(function () {
-                $("#createBtn").click(function (e) {
-                    var item = $("#item").val();
-                    var quantity = $("#quantity").val();
-                    console.log(item);
-                    console.log(quantity);
-                    e.preventDefault();
-                });
-            }
-        );
+            $("#createBtn").click(function (e) {
+                var item = $("#item").val();
+                var quantity = $("#quantity").val();
+                console.log(item);
+                console.log(quantity);
+                e.preventDefault();
+                var url = "/addItem?item=" + item + "&quantity=" + quantity;
+                $.getJSON(url, function (data) {
+                    var everything;
+                    everything = "<ul>";
+                    $.each(data, function (i, item) {
+                        everything += "<li> " + data.item[i] + " " + data.quantity[i];
+                    });
+                    everything += "</ul>";
+                    $("#inventory").html(everything);
+                })
+            });
+        });
     </script>
 
 </head>
@@ -34,6 +43,7 @@
         <input type="number" id="quantity" value="">
         <br>
         <input id="createBtn" type="submit" value="Submit">
+        <span id="inventory">Empty</span>
     </form>
     <!-- <p>City</p>
     <textarea id="displayCity">No City</textarea>
