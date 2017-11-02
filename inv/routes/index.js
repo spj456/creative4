@@ -9,7 +9,7 @@ router.get('/', function (req, res) {
 
 router.get('/addItem', function (req, res) {
     console.log("adds item");
-    fs.appendFile('items.dat.txt', req.query.q, function (err) {
+    fs.appendFile('items.dat.txt', req.query.item, function (err) {
         if (err) throw err;
         console.log('Saved!');
     });
@@ -17,7 +17,7 @@ router.get('/addItem', function (req, res) {
 
 router.get('/addItemQuantity', function (req, res) {
     console.log("adds item");
-    fs.appendFile('quantity.dat.txt', req.query.q, function (err) {
+    fs.appendFile('quantity.dat.txt', req.query.quantity, function (err) {
         if (err) throw err;
         console.log('Saved!');
     });
@@ -56,7 +56,7 @@ router.get('/deleteItem', function (req, res) {
             var items = data.toString().split("\n");
             var jsonresult = [];
             for (var i = 0; i < items.length; i++) {
-                var result = items[i].search(req.query.q);
+                var result = items[i].search(req.query.quantity);
                 if (result != -1) {
                     jsonresult.push({
                         item: items[i],
@@ -78,7 +78,7 @@ router.get('/getItem', function (req, res) {
             if (err) throw err;
             var quantities = data2.toString().split("\n");
             var items = data.toString().split("\n");
-            var myRe = new RegExp("^" + req.query.q);
+            var myRe = new RegExp("^" + req.query.quantity);
             var jsonresult = [];
             for (var i = 0; i < items.length; i++) {
                 var result = items[i].search(myRe);
