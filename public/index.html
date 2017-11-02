@@ -1,100 +1,116 @@
 <html>
+
 <head>
     <link rel="stylesheet" type="text/css" href="main.css">
 
-    <title>City Finder</title>
-    <script src="http://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-            crossorigin="anonymous">
+    <title>Inventory</title>
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
     </script>
-    <script>
+    <!-- <script>
         $(document).ready(function () {
-            $("#cityField").keyup(function () {
+                $("#cityField").keyup(function () {
 
-                var cityurl = "/getcity?q=" + $("#cityField").val();
-                console.log(cityurl);
-                $.getJSON(cityurl, function (data) {
-                    console.log(data);
-                    var everything;
-                    everything = "<ul>";
-                    $.each(data, function (i, item) {
-                        everything += "<li> " + data[i].city + "</li>";
-                    });
-                    everything += "</ul>";
-                    $("#txtHint").html(everything);
-                })
-              .done(function () { console.log('getJSON request succeeded!'); })
-              .fail(function (jqXHR, textStatus, errorThrown) {
-                  console.log('getJSON request failed! ' + textStatus);
-                  console.log("incoming " + jqXHR.responseText);
-              })
-              .always(function () {
-                  console.log('getJSON request ended!');
-              });
-                $("#weatherButton").click(function (e) {
-                    var value = $("#cityField").val();
-                    console.log(value);
-                    e.preventDefault();
-                    $("#displayCity").text(value);
-                    var myurl = "https://api.wunderground.com/api/0153d321c4fa1c06/geolookup/conditions/q/UT/";
-                    myurl += value;
-                    myurl += ".json";
-                    console.log(myurl);
-                    $.ajax({
-                        url: myurl,
-                        dataType: "json",
-                        success: function (parsed_json) {
-                            console.log(parsed_json);
-                            var location = parsed_json['location']['city'];
-                            var temp_string = parsed_json['current_observation']['temperature_string'];
-                            var current_weather = parsed_json['current_observation']['weather'];
+                    var cityurl = "/getcity?q=" + $("#cityField").val();
+                    console.log(cityurl);
+                    $.getJSON(cityurl, function (data) {
+                            console.log(data);
+                            var everything;
                             everything = "<ul>";
-                            everything += "<li>Location: " + location;
-                            everything += "<li>Temperature: " + temp_string;
-                            everything += "<li>Weather: " + current_weather;
+                            $.each(data, function (i, item) {
+                                everything += "<li> " + data[i].city + "</li>";
+                            });
                             everything += "</ul>";
-                            $("#weather").html(everything);
-                        }
+                            $("#txtHint").html(everything);
+                        })
+                        .done(function () {
+                            console.log('getJSON request succeeded!');
+                        })
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            console.log('getJSON request failed! ' + textStatus);
+                            console.log("incoming " + jqXHR.responseText);
+                        })
+                        .always(function () {
+                            console.log('getJSON request ended!');
+                        });
+                    $("#weatherButton").click(function (e) {
+                        var value = $("#cityField").val();
+                        console.log(value);
+                        e.preventDefault();
+                        $("#displayCity").text(value);
+                        var myurl =
+                            "https://api.wunderground.com/api/0153d321c4fa1c06/geolookup/conditions/q/UT/";
+                        myurl += value;
+                        myurl += ".json";
+                        console.log(myurl);
+                        $.ajax({
+                            url: myurl,
+                            dataType: "json",
+                            success: function (parsed_json) {
+                                console.log(parsed_json);
+                                var location = parsed_json['location']['city'];
+                                var temp_string = parsed_json['current_observation'][
+                                    'temperature_string'
+                                ];
+                                var current_weather = parsed_json['current_observation']
+                                    ['weather'];
+                                everything = "<ul>";
+                                everything += "<li>Location: " + location;
+                                everything += "<li>Temperature: " + temp_string;
+                                everything += "<li>Weather: " + current_weather;
+                                everything += "</ul>";
+                                $("#weather").html(everything);
+                            }
+                        });
                     });
                 });
-            });
-            $("#wordfield").keyup(function () {
-                console.log("this here");
-                var url = "/getword?q=" + $("#wordfield").val();
-                console.log(url);
-                $.getJSON(url, function (data) {
-                    console.log(data);
-                    var everything;
-                    everything = "<ul>";
-                    $.each(data, function (i, item) {
-                        everything += "<li> " + data[i].defenition;
+                $("#wordfield").keyup(function () {
+                    console.log("this here");
+                    var url = "/getword?q=" + $("#wordfield").val();
+                    console.log(url);
+                    $.getJSON(url, function (data) {
+                        console.log(data);
+                        var everything;
+                        everything = "<ul>";
+                        $.each(data, function (i, item) {
+                            everything += "<li> " + data[i].defenition;
+                        });
+                        everything += "</ul>";
+                        $("#def").html(everything);
                     });
-                    everything += "</ul>";
-                    $("#def").html(everything);
                 });
-            });
-        }
+            }
 
         );
-
-
-    </script>
+    </script> -->
 
 </head>
+
 <body>
+    <div>
+        <h2>Welcome to Inventory!</h2>
+        <h3>Create an Inventory item:</h3>
+    </div>
     <form>
-        Enter A Utah City: <input type="text" id="cityField" value=""><br>
-        Suggestion: <span id="txtHint">Empty</span>
-        <input id="weatherButton" type="submit" value="Submit">
+        What's the item?
+        <input type="text" id="itemField" value="">
+        <br> 
+        How much?
+        <input type="number" id="countField" value="">
+        <br>
+        <input id="createBtn" type="submit" value="Submit">
     </form>
-    <p>City</p>
+    <!-- <p>City</p>
     <textarea id="displayCity">No City</textarea>
     <p>Current Weather</p>
     <div id="weather">No weather</div>
     <form>
-        Enter A Word: <input type="text" id="wordfield" value=""><br>
-        Definition: <span id="def">Empty</span>
-    </form>
+        Enter A Word:
+        <input type="text" id="wordfield" value="">
+        <br> Definition:
+        <span id="def">Empty</span>
+    </form> -->
 
 </body>
+
 </html>
