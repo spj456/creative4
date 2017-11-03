@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
 
     <title>Inventory</title>
     <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -9,22 +9,64 @@
     </script>
     <script>
         $(document).ready(function () {
+            var mainUrl = "/getItem";
+            $.getJSON(mainUrl, function (data) {
+                var everything;
+                everything = "<ul>";
+                $.each(data, function (i, item) {
+                    everything += "<li> " + data[i].item + " " +
+                        "<input type=\"number\" id=\"quantity\" value=\"" +
+                        data[i].quantity +
+                        "\">"
+                        // + "<button class=\"removeBtn\" id=\"" + i
+                        // + "\">Remove</button>";
+                });
+                everything += "</ul>";
+                $("#inventory").html(everything);
+            })
             $("#createBtn").click(function (e) {
-                var item = $("#item").val();
-                var quantity = $("#quantity").val();
-                console.log(item);
-                console.log(quantity);
-                e.preventDefault();
-                var url = "/addItem?item=" + item + "&quantity=" + quantity;
+                console.log("test");
+                if ($("#item").val() != "" && $("#quantity").val() != "") {
+                    var item = $("#item").val();
+                    var quantity = $("#quantity").val();
+                    e.preventDefault();
+                    var url = "/addItem?item=" + item + "&quantity=" + quantity;
+                    $.getJSON(url, function (data) {
+                        var everything;
+                        everything = "<ul>";
+                        $.each(data, function (i, item) {
+                            everything += "<li> " + data[i].item + " " +
+                                "<input type=\"number\" id=\"quantity\" value=\"" +
+                                data[i].quantity +
+                                "\">"
+                                // + "<button class=\"removeBtn\" id=\"" + i
+                                // + "\">Remove</button>";
+                        });
+                        everything += "</ul>";
+                        $("#inventory").html(everything);
+                    })
+                }
+
+            });
+            $("#removeBtn").click(function (e) {
+                var $this = $(this);
+                console.log($(this).item);
+                console.log("test");
+                var url = "/deleteItem?item=" + $(this).item; // + "&quantity=" + quantity;
                 $.getJSON(url, function (data) {
-                    var everything;
-                    everything = "<ul>";
-                    $.each(data, function (i, item) {
-                        everything += "<li> " + data.item[i] + " " + data.quantity[i];
-                    });
-                    everything += "</ul>";
-                    $("#inventory").html(everything);
-                })
+                        var everything;
+                        everything = "<ul>";
+                        $.each(data, function (i, item) {
+                            everything += "<li> " + data[i].item + " "
+                                + "<input type=\"number\" id=\"quantity\" value=\""
+                                + data[i].quantity
+                                + "\">" 
+                                // + "<button class=\"removeBtn\" id=\"" + i
+                                // + "\">Remove</button>";
+                        });
+                        everything += "</ul>";
+                        $("#inventory").html(everything);
+                    })
             });
         });
     </script>
@@ -43,6 +85,7 @@
         <input type="number" id="quantity" value="">
         <br>
         <input id="createBtn" type="submit" value="Submit">
+        <!-- <button id="">Remove</button> -->
         <span id="inventory">Empty</span>
     </form>
     <!-- <p>City</p>
